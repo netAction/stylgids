@@ -1,7 +1,11 @@
-$(function() {
-	// TODO: Sections hideable
-	// TODO: Table of contents
+// stylgids Style Guide Generator Javascript
+// By Thomas netAction Schmidt
+// License: MIT
 
+$(function() {
+	// Pick up the HTML of all .stylgids-example
+	// and create a .stylgids-code element right below
+	// containing the same code.
 	$('.stylgids-example').each(function() {
 		var html = $(this).html();
 
@@ -26,22 +30,14 @@ $(function() {
 		// Trim trailing white spaces
 		html = $.trim(html);
 
-		function escapeHtml(string) {
-			// Escape a html string and highlight tags
-			var entityMap = {
+		// Escape html string and highlight tags
+		html = String(html).replace(/[&<>]/g, function (s) {
+			return {
 				"&": "&amp;",
 				"<": "<strong>&lt;",
-				">": "&gt;</strong>",
-				'"': '&quot;',
-				"'": '&#39;',
-				"/": '&#x2F;'
-			};
-
-			return String(string).replace(/[&<>"'\/]/g, function (s) {
-				return entityMap[s];
-			});
-		}
-		html = escapeHtml(html);
+				">": "&gt;</strong>"
+			}[s];
+		});
 
 		$('<div class="stylgids-code"></div>').html(html).insertAfter($(this));
 	});
